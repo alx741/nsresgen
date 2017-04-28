@@ -17,12 +17,35 @@ function printUsage
     echo "Usage:  nsresgen [FILE]"
 }
 
+function display_info
+{
+    echo -e "\e[46m\e[37m[•]\e[0m \e[36m$1\e[0m"
+}
+
+function display_success
+{
+    echo -e "\e[42m\e[37m[✓]\e[0m \e[32m$1\e[0m"
+}
+
+function display_warning
+{
+    echo -e "\e[43m\e[37m[⚠]\e[0m \e[33m$1\e[0m"
+}
+
+function display_error
+{
+    echo -e "\e[41m\e[37m[x]\e[0m \e[31m$1\e[0m"
+}
+
 if [[ "$1" == "" ]] || [[ ! -f "$1" ]]; then
+    display_warning "File missing"
+    echo
     printUsage
     exit 2
 elif [[ ! -d "./app/App_Resources" ]]; then
-    echo "This command must be invoked from within the root of a NativeScript project"
+    display_error "This command must be invoked from within \
+the root of a NativeScript project"
     exit 1
 else
-    echo "OK, file: $1"
+    display_info "File loaded: $1"
 fi
