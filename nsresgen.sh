@@ -22,7 +22,7 @@ printUsage()
 
 genRes()
 {
-    FILE="$1"
+    FILE=$(basename "$1")
     if [ -f "$RES_PATH/Android/drawable-mdpi/$FILE" ]; then
         echo
         displayWarning "The resource $FILE already exists"
@@ -38,20 +38,20 @@ genRes()
     echo
 
     # Generate Android resource
-    convert "$FILE" -resize "$AND_XXXHDPI>" "$RES_PATH/Android/drawable-xxxhdpi/$FILE"
-    convert "$FILE" -resize "$AND_XXHDPI>" "$RES_PATH/Android/drawable-xxhdpi/$FILE"
-    convert "$FILE" -resize "$AND_XHDPI>" "$RES_PATH/Android/drawable-xhdpi/$FILE"
-    convert "$FILE" -resize "$AND_HDPI>" "$RES_PATH/Android/drawable-hdpi/$FILE"
-    convert "$FILE" -resize "$AND_MDPI>" "$RES_PATH/Android/drawable-mdpi/$FILE"
-    convert "$FILE" -resize "$AND_LDPI>" "$RES_PATH/Android/drawable-ldpi/$FILE"
+    convert "$1" -resize "$AND_XXXHDPI>" "$RES_PATH/Android/drawable-xxxhdpi/$FILE"
+    convert "$1" -resize "$AND_XXHDPI>" "$RES_PATH/Android/drawable-xxhdpi/$FILE"
+    convert "$1" -resize "$AND_XHDPI>" "$RES_PATH/Android/drawable-xhdpi/$FILE"
+    convert "$1" -resize "$AND_HDPI>" "$RES_PATH/Android/drawable-hdpi/$FILE"
+    convert "$1" -resize "$AND_MDPI>" "$RES_PATH/Android/drawable-mdpi/$FILE"
+    convert "$1" -resize "$AND_LDPI>" "$RES_PATH/Android/drawable-ldpi/$FILE"
     if [ "$?" = "0" ]; then displaySuccess "Android resource generated successfully"; fi
 
     # Generate iOS resource
     EXT="${FILE##*.}"
     BASE="${FILE%.*}"
-    convert "$FILE" -resize "$IOS_3X>" "$RES_PATH/iOS/$BASE@3x.$EXT"
-    convert "$FILE" -resize "$IOS_2X>" "$RES_PATH/iOS/$BASE@2x.$EXT"
-    convert "$FILE" -resize "$IOS_1X>" "$RES_PATH/iOS/$BASE.$EXT"
+    convert "$1" -resize "$IOS_3X>" "$RES_PATH/iOS/$BASE@3x.$EXT"
+    convert "$1" -resize "$IOS_2X>" "$RES_PATH/iOS/$BASE@2x.$EXT"
+    convert "$1" -resize "$IOS_1X>" "$RES_PATH/iOS/$BASE.$EXT"
     if [ "$?" = "0" ]; then displaySuccess "iOS resource generated successfully"; fi
 }
 
