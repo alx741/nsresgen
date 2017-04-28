@@ -1,7 +1,5 @@
 #!/bin/sh
 
-source "$(dirname "$0")/fancy.sh"
-
 # Image sizes
 AND_XXXHDPI="192x192"
 AND_XXHDPI="144x144"
@@ -55,6 +53,22 @@ genRes()
     convert "$FILE" -resize "$IOS_2X>" "$RES_PATH/iOS/$BASE@2x.$EXT"
     convert "$FILE" -resize "$IOS_1X>" "$RES_PATH/iOS/$BASE.$EXT"
     if [ "$?" = "0" ]; then displaySuccess "iOS resource generated successfully"; fi
+}
+
+function displayInfo {
+    echo -e "\e[46m\e[37m[•]\e[0m \e[36m$1\e[0m"
+}
+
+function displaySuccess {
+    echo -e "\e[42m\e[37m[✓]\e[0m \e[32m$1\e[0m"
+}
+
+function displayWarning {
+    echo -e "\e[43m\e[37m[⚠]\e[0m \e[33m$1\e[0m"
+}
+
+function displayError {
+    echo -e "\e[41m\e[37m[x]\e[0m \e[31m$1\e[0m"
 }
 
 if [ "$1" = "" ] || [ ! -f "$1" ]; then
