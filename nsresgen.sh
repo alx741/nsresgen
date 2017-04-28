@@ -25,7 +25,18 @@ printUsage()
 genRes()
 {
     FILE="$1"
-    echo "$FILE"
+    if [ -f "$RES_PATH/Android/drawable-mdpi/$FILE" ]; then
+        echo
+        displayWarning "The resource $FILE already exists"
+        opt="n"
+        read -p "Overwrite conflicting resource? [y/N]  " opt
+        if [ "$opt" = "n" ] || [ "$opt" = "" ]; then
+            exit 0
+        fi
+    fi
+
+    echo
+    displayInfo "Generating resource: $FILE"
 }
 
 if [ "$1" = "" ] || [ ! -f "$1" ]; then
@@ -39,5 +50,5 @@ the root of a NativeScript project"
     exit 1
 else
     displayInfo "File loaded: $1"
-    genRes "$1"
+    genRes "$1" "$@"
 fi
