@@ -13,21 +13,31 @@ IOS_3X="192x192"
 IOS_2X="96x96"
 IOS_1X="48x48"
 
-function printUsage
+# Resources Path
+RES_PATH="./app/App_Resources"
+
+printUsage()
 {
     echo "NativeScript Resource Generator"
     echo "Usage:  nsresgen [FILE]"
 }
 
-if [[ "$1" == "" ]] || [[ ! -f "$1" ]]; then
+genRes()
+{
+    FILE="$1"
+    echo "$FILE"
+}
+
+if [ "$1" = "" ] || [ ! -f "$1" ]; then
     displayWarning "File missing"
     echo
     printUsage
     exit 2
-elif [[ ! -d "./app/App_Resources" ]]; then
+elif [ ! -d "$RES_PATH" ]; then
     displayError "This command must be invoked from within \
 the root of a NativeScript project"
     exit 1
 else
     displayInfo "File loaded: $1"
+    genRes "$1"
 fi
