@@ -1,7 +1,7 @@
 # NativeScript Resources Generator
 
-Helper script to generate image resources for both Android and iOS from an
-image.
+Helper script to generate [NativeScript](https://www.nativescript.org/) image
+resources for both Android and iOS from an image.
 
 Executing the script with an image path as parameter, it will generate all the
 necessary image sizes and automatically populate the `app/App_Resouces`
