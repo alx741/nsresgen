@@ -15,5 +15,14 @@ function printUsage
 {
     echo "NativeScript Resource Generator"
     echo "Usage:  nsresgen [FILE]"
-    # echo "This command must be invoked from within the root of a NS project"
 }
+
+if [[ "$1" == "" ]] || [[ ! -f "$1" ]]; then
+    printUsage
+    exit 2
+elif [[ ! -d "./app/App_Resources" ]]; then
+    echo "This command must be invoked from within the root of a NativeScript project"
+    exit 1
+else
+    echo "OK, file: $1"
+fi
