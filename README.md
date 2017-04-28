@@ -1,9 +1,9 @@
 # NativeScript Resources Generator
 
-Helper script to generate image resources for both Android and iOS from a
-sources image.
+Helper script to generate image resources for both Android and iOS from an
+image.
 
-Executing the script with a source image as parameter, it will generate all the
+Executing the script with an image path as parameter, it will generate all the
 necessary image sizes and automatically populate the `app/App_Resouces`
 directory tree.
 
@@ -17,7 +17,7 @@ Install the script:
 And invoke it while inside the root directory of a NativeScript project, passing
 an image as parameter:
 
-    $ nsresgen ~/my/images/image.png
+    $ nsresgen /home/user/cats/image.png
 
 The `app/App_Resources` directory will be correctly populated, so you're now
 able to use the resource from your code as usual:
