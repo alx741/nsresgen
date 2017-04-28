@@ -8,7 +8,7 @@ AND_XXHDPI="144x144"
 AND_XHDPI="96x96"
 AND_HDPI="72x72"
 AND_MDPI="48x48"
-AND_lDPI="36x36"
+AND_LDPI="36x36"
 IOS_3X="192x192"
 IOS_2X="96x96"
 IOS_1X="48x48"
@@ -37,6 +37,24 @@ genRes()
 
     echo
     displayInfo "Generating resource: $FILE"
+    echo
+
+    # Generate Android resource
+    convert "$FILE" -resize "$AND_XXXHDPI>" "$RES_PATH/Android/drawable-xxxhdpi/$FILE"
+    convert "$FILE" -resize "$AND_XXHDPI>" "$RES_PATH/Android/drawable-xxhdpi/$FILE"
+    convert "$FILE" -resize "$AND_XHDPI>" "$RES_PATH/Android/drawable-xhdpi/$FILE"
+    convert "$FILE" -resize "$AND_HDPI>" "$RES_PATH/Android/drawable-hdpi/$FILE"
+    convert "$FILE" -resize "$AND_MDPI>" "$RES_PATH/Android/drawable-mdpi/$FILE"
+    convert "$FILE" -resize "$AND_LDPI>" "$RES_PATH/Android/drawable-ldpi/$FILE"
+    if [ "$?" = "0" ]; then displaySuccess "Android resource generated successfully"; fi
+
+    # Generate iOS resource
+    EXT="${FILE##*.}"
+    BASE="${FILE%.*}"
+    convert "$FILE" -resize "$IOS_3X>" "$RES_PATH/iOS/$BASE@3x.$EXT"
+    convert "$FILE" -resize "$IOS_2X>" "$RES_PATH/iOS/$BASE@2x.$EXT"
+    convert "$FILE" -resize "$IOS_1X>" "$RES_PATH/iOS/$BASE.$EXT"
+    if [ "$?" = "0" ]; then displaySuccess "iOS resource generated successfully"; fi
 }
 
 if [ "$1" = "" ] || [ ! -f "$1" ]; then
