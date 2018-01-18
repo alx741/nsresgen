@@ -12,7 +12,7 @@ directory tree.
 
 Install the script:
 
-    $ sudo cp nsresgen /usr/local/bin
+    $ sudo cp nsresgen.sh /usr/local/bin/nsresgen
 
 And invoke it while inside the root directory of a NativeScript project, passing
 an image as parameter:
