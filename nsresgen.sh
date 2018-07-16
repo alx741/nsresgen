@@ -18,7 +18,7 @@ ANDROID_RES_PATH="$RES_PATH/Android/src/main/res"
 printUsage()
 {
     echo "NativeScript Resource Generator"
-    echo "Usage:  nsresgen [FILE]"
+    echo "Usage:  nsresgen <copy|remove> [FILE]"
 }
 
 copyRes()
@@ -54,6 +54,31 @@ copyRes()
     cp "$1" "$RES_PATH/iOS/$BASE@2x.$EXT"
     cp "$1" "$RES_PATH/iOS/$BASE.$EXT"
     if [ "$?" = "0" ]; then displaySuccess "iOS resource generated successfully"; fi
+}
+
+removeRes()
+{
+    FILE=$(basename "$1")
+
+    echo
+    displayInfo "Removing resource: $FILE"
+    echo
+
+    # Generate Android resource
+    rm -f "$ANDROID_RES_PATH/drawable-xxxhdpi/$FILE"
+    rm -f "$ANDROID_RES_PATH/drawable-xxhdpi/$FILE"
+    rm -f "$ANDROID_RES_PATH/drawable-xhdpi/$FILE"
+    rm -f "$ANDROID_RES_PATH/drawable-hdpi/$FILE"
+    rm -f "$ANDROID_RES_PATH/drawable-mdpi/$FILE"
+    rm -f "$ANDROID_RES_PATH/drawable-ldpi/$FILE"
+
+    EXT="${FILE##*.}"
+    BASE="${FILE%.*}"
+    rm -f "$RES_PATH/iOS/$BASE@3x.$EXT"
+    rm -f "$RES_PATH/iOS/$BASE@2x.$EXT"
+    rm -f "$RES_PATH/iOS/$BASE.$EXT"
+
+    displaySuccess "Resource removed"
 }
 
 genRes()
@@ -107,8 +132,12 @@ function displayError {
     echo -e "\e[41m\e[37m[x]\e[0m \e[31m$1\e[0m"
 }
 
-if [ "${@: -1}" = "" ] || [ ! -f "${@: -1}" ]; then
+if [ "$1" == "remove" ]; then
+    removeRes "${@: -1}"
+    exit 0
+fi
 
+if [ "${@: -1}" = "" ] || [ ! -f "${@: -1}" ]; then
     displayWarning "File missing"
     echo
     printUsage
