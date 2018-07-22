@@ -132,6 +132,12 @@ function displayError {
     echo -e "\e[41m\e[37m[x]\e[0m \e[31m$1\e[0m"
 }
 
+if [ ! -d "$RES_PATH" ]; then
+    displayError "This command must be invoked from within \
+the root of a NativeScript project"
+    exit 1
+fi
+
 if [ "$1" == "remove" ]; then
     removeRes "${@: -1}"
     exit 0
@@ -142,10 +148,6 @@ if [ "${@: -1}" = "" ] || [ ! -f "${@: -1}" ]; then
     echo
     printUsage
     exit 2
-elif [ ! -d "$RES_PATH" ]; then
-    displayError "This command must be invoked from within \
-the root of a NativeScript project"
-    exit 1
 elif [ "$1" == "copy" ]; then
     copyRes "${@: -1}"
 else
